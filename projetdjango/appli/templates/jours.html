@@ -1,0 +1,118 @@
+{% load static %} <!--Pour la feuille de style CSS-->
+<!DOCTYPE html>
+<html>
+ 
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}"> <!--Pour la feuille de style CSS-->
+    <title>Jours</title>
+    <h1>Jours</h1>
+    <hr/>
+  </head>
+
+  <body>
+    <div class="haut">
+
+      <div class="menu">
+        <nav>
+          <ul id="navigation">
+            <li><a href="http://127.0.0.1:8000">Page d'accueil</a></li>
+            <li><a href="http://127.0.0.1:8000/employees">Employés d'Enron</a></li>
+            <li><a href="http://127.0.0.1:8000/couples">Couples d'employés d'Enron</a></li>
+            <li><a href="http://127.0.0.1:8000/days">Jours</a></li>
+            <li><a href="http://127.0.0.1:8000/mails">Mails échangés</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="liens">
+        
+      </div>
+
+    </div>
+
+    <div class="corps">
+
+      <!--Formulaire-->
+      
+      <form>
+        <li><label for="/Date de début/">  Date de début : </label>
+        <input id="days" type="date" name="Date de début" maxlength="100"></li>
+
+        <li><label for="/Date de fin/">  Date de fin : </label>
+        <input id="days" type="date" name="Date de fin" maxlength="100"></li>
+
+        <li><label for="/Préciser le type des échanges : Intern ou Extern ou NA/">  Type des échanges : </label> <!-- A ajouter -->
+          <input id="echanges" type="radio" name="Préciser le type des échanges : Intern ou Extern ou NA" value="Intern"> 
+          <label for="Intern">Intern</label>
+
+          <input id="echanges" type="radio" name="Préciser le type des échanges : Intern ou Extern ou NA" value="Extern">
+          <label for="Extern">Extern</label>
+
+          <input id="echanges" type="radio" name="Préciser le type des échanges : Intern ou Extern ou NA" value="NA">
+          <label for="NA">Non renseigné</label>
+        </li> 
+
+        {% csrf_token %}
+        {{ form }}
+        <br/>
+        <input type="submit" value="Résultat">
+      </form>
+    
+      <p>Informations utilisées :<br>
+        
+        Date de début : {{date1}}<br>
+        Date de fin : {{date2}}<br>
+        Seuil du nombre de résultats : {{results}}<br>
+        Type des échanges : {{type_echange}}<br>
+      </p>
+
+      <div id="container"></div>
+      <script src="https://code.highcharts.com/highcharts.src.js"></script>
+      <script>
+        _categories = {{categories|safe}};
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Jours ayant connus les plus grand nombre d’échanges de mails'
+            },
+            xAxis: {
+              categories:_categories,
+		          crosshair: true},
+              
+            yAxis: {
+                min: 0,
+                title: {
+                  text: 'Nombre de mails'
+                }
+            },
+            series: [{
+              name: 'Nombre de mails',
+              data: {{number_series}},
+              color: 'navy'
+            },
+            ]
+        });
+      </script>
+
+      <!-- Jours -->
+      <h3>Jours dans une période donnée ayant connus les plus grand nombre d’échanges de mails</h3>
+
+      <table>
+        <tr>
+          <th> Date </th>
+          <th> Nombre de mails </th>
+        </tr>
+
+        {% for key, values in dict.items %}
+        <tr>
+            <td>{{key}}</td>
+            <td>{{values}}</td>
+        </tr>
+        {% endfor %}
+      </table>      
+    </div>
+  </body>
+</html>

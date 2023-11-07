@@ -1,0 +1,64 @@
+{% load static %} <!--Pour la feuille de style CSS-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}"> 
+    <title>Employées</title>
+    <h1>Employés de l'entreprise ENRON</h1><hr/>
+  </head>
+    
+  <body>
+    <div class="haut">
+      <div class="menu">
+          <nav>
+            <ul id="navigation">
+              <li><a href="http://127.0.0.1:8000">Page d'accueil</a></li>
+              <li><a href="http://127.0.0.1:8000/employees">Employés d'Enron</a></li>
+              <li><a href="http://127.0.0.1:8000/couples">Couples d'employés d'Enron</a></li>
+              <li><a href="http://127.0.0.1:8000/days">Jours</a></li>
+              <li><a href="http://127.0.0.1:8000/mails">Mails échangés</a></li>
+            </ul>
+          </nav>
+      </div>
+
+      <div class="liens">
+        <!--Accès rapides aux différentes vues associées à la page employees (sous pages)-->
+        <li><a href="http://127.0.0.1:8000/employees">Employés</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/name">Attributs d'un employé avec son nom</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/email">Attributs d'un employé avec une de ses adresses emails</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/echanges">Employés ayant envoyé ou reçu un certain nombre de mails dans une période</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/liste">Employés ayant communiqué avec un employé</a></li>
+        <br/>
+      </div>
+    </div>
+    <div class="corps">
+      
+      <!--Formulaire-->
+
+      <form>
+        <label for="/Adresse email d'un employé/"> Adresse email d'un employé : </label>
+        <input id="email" type="email" name="Adresse email d'un employé" maxlength="100" size="30" required> 
+        {% csrf_token %}
+        {{ form }}
+        <br/>
+        <input type="submit" value="Résultat">
+      </form>
+
+      <p>Informations utilisées :<br>
+        Adresse : {{email}}<br>
+      </p>
+
+      <!--Vue employée par une addresse email-->
+      <div id="Un employé par une de ses adresses emails">
+        <h3>Un employé par une de ses adresses emails</h3>
+
+        {%for emp2 in attributs_email%}
+        
+            <li>Nom : {{ emp2.name }} </li>
+            <li>Statut : {{ emp2.category }} </li>
+            <li>Contact : {{ emp2.email }} </li><br/>
+      
+        {% endfor %}
+
+      </div>

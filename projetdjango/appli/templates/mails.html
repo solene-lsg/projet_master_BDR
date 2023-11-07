@@ -1,0 +1,104 @@
+{% load static %} <!--Pour la feuille de style CSS-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
+    <title>Mails</title>
+    <h1>Mails</h1><hr/>
+  </head>
+
+  <body>
+
+    <div class="haut">
+      <div class="menu">
+          <nav>
+            <ul id="navigation">
+              <li><a href="http://127.0.0.1:8000">Page d'accueil</a></li>
+              <li><a href="http://127.0.0.1:8000/employees">Employés d'Enron</a></li>
+              <li><a href="http://127.0.0.1:8000/couples">Couples d'employés d'Enron</a></li>
+              <li><a href="http://127.0.0.1:8000/days">Jours</a></li>
+              <li><a href="http://127.0.0.1:8000/mails">Mails échangés</a></li>
+            </ul>
+          </nav>
+      </div>
+      <div class="liens"></div>
+    </div>
+    
+    <div class="corps">
+      <div id="container"></div>
+      <script src="https://code.highcharts.com/highcharts.js"></script>
+      <script src="https://code.highcharts.com/modules/exporting.js"></script>
+      <script src="https://code.highcharts.com/modules/export-data.js"></script>
+      <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+      <script>
+        Highcharts.setOptions({
+        colors: ['hsl(185, 38%, 62%)','hsl(39, 65%, 47%)']
+        });
+        Highcharts.chart('container', {
+          chart: {
+            plotBackgroundColor:'#303057',
+            plotBorderWidth: 1,
+            plotShadow: true,
+            type: 'pie',
+          },
+          title: {
+            text: 'Pourcentage des pièces jointes présentes dans la base de données'
+          },
+          tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          },
+          accessibility: {
+            point: {
+              valueSuffix: '%'
+            }
+          },
+          plotOptions: {
+            pie: {
+              allowPointSelect: true,
+              cursor: 'pointer',
+              dataLabels: {
+                enabled: false
+                  },
+              showInLegend: true
+              
+            }
+          },
+          series: [{
+              name: 'Pourcentage',
+              colorByPoint: true,
+              data: [{
+                  name: 'Filename',
+                  y: {{filename}},
+                  sliced: true,
+              }, {
+                  name: 'No Filename',
+                  y: {{nofilename}}
+              }]
+          }]
+        });
+      </script>
+      
+      <!--Formulaire-->
+      <form>
+        <li><label for="/Donner les mots clés, séparés par une virgule/"> Mots clés : </label>
+        <input id="days" type="text" name="Donner les mots clés, séparés par une virgule" maxlength="100" size="100" required>
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Résultat"></li>
+      </form>
+
+      <p> Mots clés fournis : {{mots}}<br></p>
+
+      <!-- Vue -->
+      <h3>Liste des mails</h3>
+
+      {%for m in mails%}
+      <li> 
+        Content : {{ m.id }}
+      </li><br/>
+      {% endfor %}
+      
+    </div>
+  </body>
+</html>

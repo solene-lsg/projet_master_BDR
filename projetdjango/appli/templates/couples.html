@@ -1,0 +1,114 @@
+{% load static %} <!--Pour la feuille de style CSS-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
+    <title>Couples</title>
+    <h1>Couples d'employés de l'entreprise ENRON</h1><hr/>
+  </head>
+ 
+  <body>
+    <div class="haut">
+      <div class="menu">
+          <nav>
+            <ul id="navigation">
+              <li><a href="http://127.0.0.1:8000">Page d'accueil</a></li>
+              <li><a href="http://127.0.0.1:8000/employees">Employés d'Enron</a></li>
+              <li><a href="http://127.0.0.1:8000/couples">Couples d'employés d'Enron</a></li>
+              <li><a href="http://127.0.0.1:8000/days">Jours</a></li>
+              <li><a href="http://127.0.0.1:8000/mails">Mails échangés</a></li>
+            </ul>
+          </nav>
+      </div>
+
+      <div class="liens"></div>
+
+    </div>
+
+    <div class="corps">
+
+      <!--Formulaire-->
+      
+      <form>
+        <li><label for="/Date de début/">  Date de début : </label></li>
+        <input id="days" type="date" name="Date de début" maxlength="100">
+
+        <li><label for="/Date de fin/">  Date de fin : </label></li>
+        <input id="days" type="date" name="Date de fin" maxlength="100">
+
+        <li><label for="/Nombre minimum de mails échangés/">  Minimum de mails échangés : </label>
+        <input id="mails" type="number" name="Nombre minimum de mails échangés" maxlength="10" size="8"></li>
+
+        <li><label for="/Seuil du nombre de résultats/">  Seuil du nombre de résultats :</label> 
+        <input id="seuil" type="number" name="Seuil du nombre de résultats" maxlength="10" size="8"></li> 
+
+        <li><label for="/Préciser le type des échanges : Intern ou Extern ou NA/">  Type des échanges : </label>
+          <input id="echanges" type="radio" name="Préciser le type des échanges : Intern ou Extern ou NA" value="Intern"> 
+          <label for="Intern">Intern</label>
+
+          <input id="echanges" type="radio" name="Préciser le type des échanges : Intern ou Extern ou NA" value="Extern">
+          <label for="Extern">Extern</label>
+
+          <input id="echanges" type="radio" name="Préciser le type des échanges : Intern ou Extern ou NA" value="NA">
+          <label for="NA">Non renseigné</label>
+        </li>
+        
+        {% csrf_token %}
+        {{ form }}
+        <br/>
+        <li><input type="submit" value="Résultat"></li>
+      </form>
+
+      <p>Informations utilisées :<br>
+        
+        Date de début : {{date1}}<br>
+        Date de fin : {{date2}}<br>
+        Nombre minimum de mails échangés : {{nombre_min}}<br>
+        Seuil du nombre de résultats : {{results}}<br>
+        Type des échanges : {{type_echange}}<br>
+      </p>
+
+
+      <!-- Vue liste des employées ayant le plus communiqué -->
+      <h3>Couples d'employés ayant le plus communiqué dans un intervalle de temps</h3>
+      
+      <table>
+        <tr>
+          <th> Personne 1 </th>
+          <th> Personne 2 </th>
+          <th> Nombre de mails </th>
+        </tr>
+
+        {% for keys, values in final_dict.items %}
+        <tr>
+          {% for key in keys %}
+            <td>{{key}}</td>
+            {% endfor %}
+          <td>{{values}}</td>
+          
+        </tr>
+        {% endfor %}
+      </table>
+      <br/>
+
+      <h3>Détail des couples d'employés ayant le plus communiqué dans un intervalle de temps, par conversation</h3>
+      <table>
+        <tr>
+          <th> Expéditeur </th>
+          <th> Destinataire </th>
+          <th> Nombre de mails par conversation </th>
+        </tr>
+
+        {%for c in couples%}
+        <tr>
+          <td> {{ c.sender }} </td>
+          <td> {{ c.receiver }} </td>
+          <td> {{ c.number_mails }} </td>
+        </tr>
+        {% endfor %}
+
+      </table>
+    </div>
+  </body>
+</html>

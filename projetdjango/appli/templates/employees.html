@@ -1,0 +1,42 @@
+{% load static %} <!--Pour la feuille de style CSS-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
+    <title>Employées</title>
+    <h1>Employés de l'entreprise ENRON</h1><hr/>
+  </head>
+    
+  <body>
+    
+    <div class="haut">
+      
+      <div class="menu">
+        <nav>
+          <ul id="navigation">
+            <li><a href="http://127.0.0.1:8000">Page d'accueil</a></li>
+            <li><a href="http://127.0.0.1:8000/employees">Employés d'Enron</a></li>
+            <li><a href="http://127.0.0.1:8000/couples">Couples d'employés d'Enron</a></li>
+            <li><a href="http://127.0.0.1:8000/days">Jours</a></li>
+            <li><a href="http://127.0.0.1:8000/mails">Mails échangés</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="liens">
+        <!--Accès rapides aux différentes vues associées à la page employees (sous pages)-->
+        <li><a href="http://127.0.0.1:8000/employees">Employés</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/name">Attributs d'un employé avec son nom</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/email">Attributs d'un employé avec une de ses adresses emails</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/echanges">Employés ayant envoyé ou reçu un certain nombre de mails dans une période</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/liste">Employés ayant communiqué avec un employé</a></li>
+        <br/>
+      </div>
+    </div>
+
+    <div class="corps">      
+      <p style="color: navy; font-size: 20px; text-align: center">Il y a {{num_intern}} employés dans la base de données</p>
+    </div>
+  </body>
+</html>

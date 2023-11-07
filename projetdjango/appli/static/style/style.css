@@ -1,0 +1,123 @@
+head {
+  background-color: rgb(85, 130, 146);
+  text-align: center;
+  font-family: "Calibri";
+}
+
+body {
+  background-color: rgb(242, 245, 246);
+  margin-left: 100px;
+  margin-right: 100px;
+  font-family: "Calibri";
+}
+
+/*Style de listes*/
+li{
+  text-decoration: none;
+  list-style:none;
+}
+
+/*Les styles de titres*/
+h1 {
+  color: #0b0b31;
+  text-align: center;
+}
+  
+h2 {
+  color: #0B0B61;
+  text-align: center;
+  font-size: 30px;
+}
+  
+h3 {
+  color: #0B0B61;
+  font-size: 20px;
+}
+
+/*Les styles pour la mise en page : un bloc haut contenant menu et liens, et un bloc corps en dessous*/
+.haut {
+  margin: 10px;
+  display: block;
+  height:140px;
+}
+.haut .menu {
+  float: left;
+  height:150px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.haut .liens{ 
+  float: center;
+  font-size:17px;
+  margin-left:350px;
+  margin-right:350px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  height:110px;
+}
+
+.corps {
+  float: bottom;
+  margin: 10px;
+  margin-top: 30px;
+}
+
+/*Tableaux*/
+.corps table{
+  border:#0b0b31 "1";
+  border-style:groove;
+  column-width: 50px;
+}
+
+table td {
+  border: 1px solid #000;
+  padding: 5px;
+  width:200px;
+  text-align: center;
+}
+
+/*Listes incluses dans la division corps*/
+.corps form li{
+  text-decoration: none;
+  list-style:none;
+}
+
+
+/* <ul> */
+#navigation { 
+  width: 250px;
+  height:100px;
+  list-style: none;
+  margin: 0;
+  padding : 0;
+}
+
+/* éléments de listes de navigation */
+#navigation li { 
+  background: #dfdfff;
+  color:#050506;
+  font-size: 15px;
+  border:1px;
+  border-style:groove;
+  border-color:  #0B0B61 ;
+  margin: 2px;
+}
+
+/* Style de l'ensemble des éléments de navigation */
+#navigation li a {
+  display: block;
+  background: #dfdfff;
+  color:#050506;
+  font: 1em 'Calibri';
+  line-height: 1em;
+  text-align: center;
+  text-decoration: none;
+  padding: 3px ;
+}
+
+/* Style de la navigation : couleur quand on passe la souris, etc */
+#navigation li a:hover, #navigation li a:focus, #navigation li a:active { 
+  background: #9696b0;
+  text-decoration: none;
+}

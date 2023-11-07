@@ -1,0 +1,106 @@
+{% load static %} <!--Pour la feuille de style CSS-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
+    <title>Employées</title>
+    <h1>Employés de l'entreprise ENRON</h1><hr/>
+  </head>
+    
+  <body>
+    
+    <div class="haut">
+      <div class="menu">
+          <nav>
+            <ul id="navigation">
+              <li><a href="http://127.0.0.1:8000">Page d'accueil</a></li>
+              <li><a href="http://127.0.0.1:8000/employees">Employés d'Enron</a></li>
+              <li><a href="http://127.0.0.1:8000/couples">Couples d'employés d'Enron</a></li>
+              <li><a href="http://127.0.0.1:8000/days">Jours</a></li>
+              <li><a href="http://127.0.0.1:8000/mails">Mails échangés</a></li>
+            </ul>
+          </nav>
+      </div>
+
+      <div class="liens">
+        <!--Accès rapides aux différentes vues associées à la page employees (sous pages)-->
+        <li><a href="http://127.0.0.1:8000/employees">Employés</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/name">Attributs d'un employé avec son nom</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/email">Attributs d'un employé avec une de ses adresses emails</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/echanges">Employés ayant envoyé ou reçu un certain nombre de mails dans une période</a></li>
+        <li><a href="http://127.0.0.1:8000/employees/liste">Employés ayant communiqué avec un employé</a></li>
+        <br/>
+      </div>
+    </div>
+
+    <div class="corps">
+
+      <!--Formulaire-->
+      
+      <form>
+        <li><label for="/Adresse d'un employé/"> Adresse d'un employé :</label>
+        <input id="address" type="email" name="Adresse d'un employé" maxlength="100" size="30"> </li>
+
+        <li><label for="/Date de début/"> Date de début :</label>
+        <input id="days" type="date" name="Date de début" maxlength="100"></li>
+
+        <li><label for="/Date de fin/"> Date de fin :</label>
+        <input id="days" type="date" name="Date de fin" maxlength="100"></li>
+
+        <li><label for="/Seuil du nombre de résultats/">  Seuil du nombre de résultats :</label> 
+        <input id="seuil" type="number" name="Seuil du nombre de résultats" maxlength="10" size="8"></li> 
+
+        {% csrf_token %}
+        {{ form }}
+        <br/>
+        <li><input type="submit" value="Résultat"></li>
+      </form>
+
+      <p>Informations utilisées :<br>
+        
+        Adresse : {{email}}<br>
+        Seuil du nombre de résultats : {{results}}<br>
+        Date de début : {{date1}}<br>
+        Date de fin : {{date2}}<br>
+      </p>
+
+      <!--Vue liste des employées ayant communiqué avec un employée-->
+      <div id="Employés ayant communiqué avec un employé">
+        <h3>Liste des employés ayant communiqué avec un employé</h3>
+        <table>
+          <tr>
+            <th>Employé</th>
+          </tr>
+
+          {%for emp in liste%}
+          <tr>
+            <td> {{ emp }} </td>
+          </tr>
+          {% endfor %}
+
+        </table>
+        
+        
+        <h3>Détail des communications</h3>
+
+        <table>
+          <tr>
+            <th> Expéditeur </th>
+            <th> Destinataire </th>
+            <th> Date </th>
+          </tr>
+
+          {%for emp in liste_employees%}
+          <tr>
+            <td> {{ emp.sender }} </td>
+            <td> {{ emp.receiver}} </td>
+            <td> {{ emp.date_mail }} </td>
+          </tr>
+          {% endfor %}
+
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

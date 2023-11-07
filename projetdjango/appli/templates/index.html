@@ -1,0 +1,90 @@
+{% load static %} <!--Pour la feuille de style CSS-->
+<!DOCTYPE html>
+<html>
+ 
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
+    <title>Index</title>
+    <h1>Bienvenue dans l'application Enron<br/></h1><hr/>
+  </head>
+
+  <body>
+    <div class="haut">
+      <div class="menu">
+          <nav>
+            <ul id="navigation">
+              <li><a href="http://127.0.0.1:8000">Page d'accueil</a></li>
+              <li><a href="http://127.0.0.1:8000/employees">Employés d'Enron</a></li>
+              <li><a href="http://127.0.0.1:8000/couples">Couples d'employés d'Enron</a></li>
+              <li><a href="http://127.0.0.1:8000/days">Jours</a></li>
+              <li><a href="http://127.0.0.1:8000/mails">Mails échangés</a></li>
+            </ul>
+          </nav>
+      </div>
+
+      <div class="liens">
+        <!--Accès rapides aux différentes vues associées à la page employees (sous pages)-->
+        
+      </div>
+    </div>
+  
+    <div class="corps">
+      <!--Graphique employés externes-->
+      <div id="graphe">
+        <div id="container"></div>
+        <script src="https://code.highcharts.com/highcharts.src.js"></script>
+        <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+        <script src="https://code.highcharts.com/modules/exporting.js"></script>
+        <script src="https://code.highcharts.com/modules/export-data.js"></script>
+        <script>
+          Highcharts.setOptions({
+          colors: ['hsl(185, 38%, 62%)','hsl(39, 65%, 47%)']
+          });
+          Highcharts.chart('container', {
+            chart: {
+              plotBackgroundColor:'#303057',
+              plotBorderWidth: 1,
+              plotShadow: true,
+              type: 'pie',
+            },
+            
+            title: {
+              text: 'Part des employés et des personnes externes dans la base'
+            },
+            tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            accessibility: {
+              point: {
+                valueSuffix: '%'
+              }
+            },
+            plotOptions: {
+              pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                  enabled: false
+              },
+              showInLegend: true
+              }
+            },
+            series: [{
+                name: 'Pourcentage',
+                colorByPoint: true,
+                data: [{
+                    name: 'Intern',
+                    y: {{num_intern}},
+                    sliced: true,
+                }, {
+                    name: 'Extern',
+                    y: {{num_extern}}
+                }]
+            }]
+          });
+        </script>      
+      </div>
+    </div>
+  </body>
+</html>
