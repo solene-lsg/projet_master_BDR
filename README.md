@@ -11,4 +11,5 @@ Etapes :
 - Peuplement des tables du modèle : implémentation dans postgreSQL
 - Réalisation d'une application web de requêtes et de visualisation (framework Django)
 
-
+Fonctionnement :
+python manage.py runserver
